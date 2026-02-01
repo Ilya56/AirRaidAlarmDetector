@@ -10,7 +10,7 @@ import re
 import time
 import yaml
 from datetime import datetime, timedelta
-from typing import Dict, List, Optional, Any, Callable
+from typing import Dict, List, Optional, Any, Callable, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 
@@ -116,6 +116,10 @@ class ConfigurableEngine:
             config_path: Path to the YAML configuration file
         """
         self.config_path = config_path
+        self._initialize()
+
+    def _initialize(self):
+        """Load configuration and initialize engine state."""
         self.config = self._load_config()
         
         # Parse configuration
@@ -182,7 +186,7 @@ class ConfigurableEngine:
 
     def reload_config(self):
         """Reload configuration from file (useful for hot-reloading)."""
-        self.__init__(self.config_path)
+        self._initialize()
 
     def add_event_listener(self, listener: Callable[[DetectionEvent], None]):
         """
@@ -311,7 +315,7 @@ class ConfigurableEngine:
         return True
 
     def _determine_priority(self, keywords: List[str], locations: List[str], 
-                           message: str) -> tuple[AlertPriority, Optional[str]]:
+                           message: str) -> Tuple[AlertPriority, Optional[str]]:
         """
         Determine alert priority based on matched rules.
         

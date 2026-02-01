@@ -19,19 +19,19 @@ cooldown_seconds: 60
 channels:
   - name: "Official Alert Channel"
     id: "official_alerts"
-    telegram_id: -1001234567890  # Replace with actual Telegram channel ID
+    telegram_id: -1001234567890  # REPLACE: Get actual channel ID (see README)
     enabled: true
     priority: 1  # Higher priority channels are weighted more in majority fusion
 
   - name: "Community Watch"
     id: "community_watch"
-    telegram_id: -1001234567891  # Replace with actual Telegram channel ID
+    telegram_id: -1001234567891  # REPLACE: Get actual channel ID (see README)
     enabled: true
     priority: 1
 
   - name: "Regional Updates"
     id: "regional_updates"
-    telegram_id: -1001234567892  # Replace with actual Telegram channel ID
+    telegram_id: -1001234567892  # REPLACE: Get actual channel ID (see README)
     enabled: false  # Can be disabled without removing from config
     priority: 2
 

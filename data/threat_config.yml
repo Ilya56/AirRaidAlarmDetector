@@ -1,0 +1,117 @@
+# Air Raid Alarm Detection Configuration
+# This file defines the behavior of the detection engine.
+
+# Fusion mode: how to combine detections from multiple channels
+# - "any": trigger alarm if ANY channel matches
+# - "all": trigger alarm only if ALL channels match
+# - "majority": trigger alarm if more than 50% of channels match
+fusion_mode: "any"
+
+# Time-to-live (TTL) in seconds - how long to remember a detection
+# before it expires and can be re-triggered
+ttl_seconds: 300
+
+# Cooldown period in seconds - minimum time between consecutive alarms
+# for the same location/keyword combination
+cooldown_seconds: 60
+
+# Channels to monitor for threats
+channels:
+  - name: "Official Alert Channel"
+    id: "official_alerts"
+    telegram_id: -1001234567890  # Replace with actual Telegram channel ID
+    enabled: true
+    priority: 1  # Higher priority channels are weighted more in majority fusion
+
+  - name: "Community Watch"
+    id: "community_watch"
+    telegram_id: -1001234567891  # Replace with actual Telegram channel ID
+    enabled: true
+    priority: 1
+
+  - name: "Regional Updates"
+    id: "regional_updates"
+    telegram_id: -1001234567892  # Replace with actual Telegram channel ID
+    enabled: false  # Can be disabled without removing from config
+    priority: 2
+
+# Keywords that trigger alarm detection
+# Each keyword can have variants and is case-insensitive
+keywords:
+  - term: "air raid"
+    variants:
+      - "air alert"
+      - "air alarm"
+      - "aerial threat"
+    enabled: true
+
+  - term: "missile"
+    variants:
+      - "missiles"
+      - "rocket"
+      - "rockets"
+    enabled: true
+
+  - term: "drone"
+    variants:
+      - "drones"
+      - "UAV"
+      - "unmanned aerial"
+    enabled: true
+
+  - term: "artillery"
+    variants:
+      - "shelling"
+      - "bombardment"
+    enabled: true
+
+  - term: "shelter"
+    variants:
+      - "take cover"
+      - "seek shelter"
+      - "go to shelter"
+    enabled: true
+
+# Locations to monitor (optional)
+# If specified, only messages mentioning these locations will trigger alarms
+# Leave empty to detect all messages with keywords
+locations:
+  - name: "Kyiv"
+    aliases:
+      - "Kiev"
+      - "Kyiv Oblast"
+    enabled: true
+
+  - name: "Lviv"
+    aliases:
+      - "Lvov"
+      - "Lviv Oblast"
+    enabled: true
+
+  - name: "Kharkiv"
+    aliases:
+      - "Kharkov"
+      - "Kharkiv Oblast"
+    enabled: true
+
+# Detection rules
+# Define custom logic for more complex detection scenarios
+rules:
+  - name: "critical_alert"
+    description: "High priority alerts that should always trigger"
+    conditions:
+      # All conditions must be met (AND logic)
+      keyword_required: true
+      location_required: false
+      min_message_length: 10
+    actions:
+      priority: "critical"
+      
+  - name: "regional_alert"
+    description: "Location-specific alerts"
+    conditions:
+      keyword_required: true
+      location_required: true
+      min_message_length: 15
+    actions:
+      priority: "high"

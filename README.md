@@ -27,6 +27,7 @@ AirRaidAlarmDetector/
 ├── data/
 │   └── threat_config.yml          # Configuration file (example included)
 ├── service.py                      # Main service with Telethon + MQTT
+├── example.py                      # Standalone usage example
 ├── requirements.txt                # Python dependencies
 └── README.md                       # This file
 ```
@@ -202,6 +203,8 @@ if event:
 stats = engine.get_statistics()
 print(stats)
 ```
+
+See `example.py` for a complete working example of using the engine programmatically.
 
 ## MQTT Alert Format
 
